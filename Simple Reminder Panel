@@ -1,0 +1,92 @@
+from tkinter import *
+
+#pack
+#place
+#grid
+
+master = Tk()
+canvas = Canvas(master , height=450, width=750)
+canvas.pack()
+
+frame_ust = Frame(master , bg= "light blue")
+frame_ust.place(relx = 0.1, rely = 0.1,relheight=0.1,relwidth=0.8)
+
+
+frame_alt_sol = Frame(master , bg ="light blue")
+frame_alt_sol.place(relx = 0.1 , rely = 0.21, relheight = 0.6 , relwidth = 0.3)
+
+frame_alt_sag = Frame(master , bg = "light blue")
+frame_alt_sag.place(relx = 0.41 , rely = 0.21 , relheight = 0.6 , relwidth = 0.49)
+
+top_label = Label(frame_ust , background="light blue" , text="Hatırlatma Tipi: ",font="Verdana 12 bold")
+top_label.pack(padx = 10 , pady = 10 , side=LEFT)
+
+hatirlatma_opsiyon = StringVar(frame_ust)
+hatirlatma_opsiyon.set("\t")
+
+hatirlatma_acilir_pencere = OptionMenu(frame_ust,hatirlatma_opsiyon,"Dogum Gunu","Sinav Tarihi","Yil dönümü","Ödeme")
+hatirlatma_acilir_pencere.pack(padx=10,pady=10,side=LEFT)
+
+Label(frame_alt_sol , text="Hatırlatma Tipi" , bg="light blue",  font="Verdana 12 bold").pack(padx=10,pady=10,anchor=NW)
+
+var = IntVar()
+R1 = Radiobutton(frame_alt_sol , text="Sisteme kaydet" , variable=var , value=1 , bg="light blue" , font="Verdana 10")
+R1.pack(anchor=NW , padx=10,pady=8)
+
+R2 = Radiobutton(frame_alt_sol , text="E-posta gönder" , variable=var , value=2 , bg="light blue" , font="Verdana 10")
+R2.pack(anchor=NW , padx=10,pady=8)
+
+var1 = IntVar()
+C1 = Checkbutton(frame_alt_sol,text="1 ay önce", variable=var1, onvalue = 1, offvalue = 2, bg="light blue", font="Verdana 10" )
+C1.pack(anchor=NW , padx=15 , pady=5)
+
+var2 = IntVar()
+C2 = Checkbutton(frame_alt_sol,text="1 hafta önce", variable=var2, onvalue = 1, offvalue = 2, bg="light blue", font="Verdana 10" )
+C2.pack(anchor=NW , padx=15 , pady=5)
+
+var3 = IntVar()
+C3 = Checkbutton(frame_alt_sol,text="1 gün önce", variable=var3, onvalue = 1, offvalue = 2, bg="light blue", font="Verdana 10" )
+C3.pack(anchor=NW , padx=15 , pady=5)
+
+var4 = IntVar()
+C4 = Checkbutton(frame_alt_sol,text="Aynı gün içerisinde", variable=var4, onvalue = 1, offvalue = 2, bg="light blue", font="Verdana 10" )
+C4.pack(anchor=NW , padx=15 , pady=5)
+from tkinter import messagebox
+def gonder():
+    son_mesaj = ""
+    if var.get():
+        if var.get() == 1:
+            son_mesaj = "Mesajınız Sisteme Başarıyla Kaydedilmiştir."
+            messagebox.showinfo("Başarılı İşlem" , son_mesaj)
+            
+            tip = hatirlatma_opsiyon.get() if hatirlatma_opsiyon.get() == "" else "Genel"
+            message = metin_alani.get("1.0" ,"end")
+            with open("hatirlatma.txt" , "w") as dosya:
+                dosya.write("{} kategorisinde {} mesajı kaydedilmiştir.".format(tip,message))
+                dosya.close()
+            
+        elif var.get() == 2 :
+            son_mesaj = "Mesajınız E-mail yoluyla size gönderilecektir."
+            messagebox.showinfo("Başarılı İşlem" , son_mesaj)
+
+Label(frame_alt_sag,text="Hatırlatma Mesajı" , bg="light blue" , font = "Verdana 12 bold").pack(padx = 10 , pady = 10 , anchor=N)
+metin_alani = Text(frame_alt_sag , height = 9, width = 40)
+metin_alani.tag_configure('style' , foreground = "#bfbfbf" , font=("Verdana", 7 ,"bold"))
+metin_alani.pack()
+
+karsilama_metni = "Mesajı buraya girin..."
+metin_alani.insert(END , karsilama_metni , "style")
+
+gonder_butonu = Button (frame_alt_sag , text = "Gönder" , font="Verdana 10" , command=gonder)
+gonder_butonu.pack()
+
+
+
+
+
+
+
+
+
+
+master.mainloop()
