@@ -1,0 +1,9 @@
+from keplergl import KeplerGl
+map_1 = KeplerGl(height = 800)
+
+##dataset was retrieved from kaggle page --> (earthquake.csv)
+
+with open('earthquake.csv' , 'r') as f:
+  csvData = f.read()
+map_1.add_data(data = csvData, name = 'data_1')     ##data was added to keplergl 
+map1
